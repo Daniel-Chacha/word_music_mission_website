@@ -15,7 +15,7 @@ export function Footer() {
   const socials = Object.entries(site.socials).filter(([, url]) => Boolean(url))
 
   return (
-    <footer className="border-t border-gold-700/30 bg-ink-800">
+    <footer className="border-t border-hairline bg-ink-800">
       <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-[2fr_1fr_1fr]">
           <div>

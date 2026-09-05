@@ -43,7 +43,7 @@ export default async function AdminOrdersPage() {
           <div className="mt-10 overflow-x-auto">
             <table className="w-full min-w-[720px] text-left text-sm">
               <thead>
-                <tr className="border-b border-gold-700/40">
+                <tr className="border-b border-rule">
                   <th scope="col" className="eyebrow py-3">Reference</th>
                   <th scope="col" className="eyebrow py-3">Status</th>
                   <th scope="col" className="eyebrow py-3">Customer</th>

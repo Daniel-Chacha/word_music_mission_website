@@ -24,7 +24,7 @@ export default function NotesPage() {
           {teachingNotes.map((note) => (
             <article
               key={note.slug}
-              className="flex flex-wrap items-center justify-between gap-6 border-t border-gold-700/40 py-8"
+              className="flex flex-wrap items-center justify-between gap-6 border-t border-rule py-8"
             >
               <div className="max-w-2xl">
                 <h2 className="text-xl font-bold">{note.title}</h2>

@@ -60,7 +60,7 @@ function FilterButton({
       className={`px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-colors ${
         active
           ? 'bg-gold-500 text-ink-900'
-          : 'border border-gold-700/60 text-bone-dim hover:border-gold-500 hover:text-gold-300'
+          : 'border border-rule-strong text-bone-dim hover:border-gold-500 hover:text-gold-300'
       }`}
     >
       {children}

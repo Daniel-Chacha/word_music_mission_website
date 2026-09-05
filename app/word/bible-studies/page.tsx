@@ -20,7 +20,7 @@ export default function BibleStudiesPage() {
         </h1>
         <div className="mt-14">
           {bibleStudies.map((study) => (
-            <article key={study.slug} className="group border-t border-gold-700/40 py-8">
+            <article key={study.slug} className="group border-t border-rule py-8">
               {study.series && <Badge>{study.series}</Badge>}
               <h2 className="mt-4 text-2xl font-bold">
                 <Link

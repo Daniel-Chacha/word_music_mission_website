@@ -30,7 +30,7 @@ export default async function ProductPage(props: PageProps<'/merch/[slug]'>) {
   return (
     <Section>
       <Container className="grid gap-14 lg:grid-cols-2">
-        <div className="grain relative aspect-square overflow-hidden bg-ink-800">
+        <div className="surface-media grain relative aspect-square overflow-hidden bg-ink-800">
           <Image
             src={product.images[0].src}
             alt={product.images[0].alt}
@@ -50,7 +50,7 @@ export default async function ProductPage(props: PageProps<'/merch/[slug]'>) {
 
           <AddToCart product={product} commerceEnabled={isCommerceEnabled()} />
 
-          <ul className="mt-12 border-t border-gold-700/40 pt-6">
+          <ul className="mt-12 border-t border-rule pt-6">
             {product.details.map((detail) => (
               <li
                 key={detail}

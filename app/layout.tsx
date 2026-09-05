@@ -4,6 +4,7 @@ import { site } from '@/content/site'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { SkipLink } from '@/components/layout/SkipLink'
+import { ThemeScript } from '@/components/layout/ThemeScript'
 import './globals.css'
 
 const archivo = Archivo({
@@ -40,9 +41,13 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang="en"
+      data-theme="dark"
+      // The theme script rewrites data-theme before React hydrates.
+      suppressHydrationWarning
       className={`${archivo.variable} ${crimson.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-ink-900 text-bone">
+        <ThemeScript />
         <SkipLink />
         <Header />
         <main id="main" className="flex-1">

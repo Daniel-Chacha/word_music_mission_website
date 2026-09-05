@@ -228,16 +228,41 @@ docs/superpowers/   Design spec and implementation plans
 
 ## Design
 
-Black, gold, white, and red used sparingly. The reference is a foil-stamped
-leather Bible, not a dark dashboard.
+Two themes. **Dark is the default and the brand identity** — black ground, gold
+hairlines, red reserved for giving. **Light is opt-in**, chosen with the toggle
+in the header and remembered in `localStorage`.
 
-Two rules worth keeping if you extend the site:
+The light theme is not an inversion. It is built from four layered warm whites
+— page `#fbfaf7`, alternating section `#f2f0e9`, cards pure `#ffffff` — where
+separation between components comes from **shadow**, not from a border or a
+darker fill. The `surface-card` / `surface-media` / `surface-panel` /
+`surface-header` classes in `app/globals.css` carry that elevation; in dark
+they resolve to `none`, because contrast between the ink shades already does
+the job.
+
+Three rules worth keeping if you extend the site:
 
 - **Gold is a line, not a fill.** Hairlines, letterspaced small-caps labels and
   numerals — no gold gradients or glows.
 - **Red means the blood of Christ, so it is reserved for giving actions.** Red
-  anywhere other than a Support/Give button is a mistake. It also fails colour
-  contrast as text on black, so red is a background colour carrying white text.
+  anywhere other than a Support/Give button is a mistake.
+- **Never use an opacity modifier on a themed colour.** Tailwind compiles
+  `border-gold-700/40` to a literal hex, which will *not* follow a theme
+  change. Every translucent value the design depends on is a named token
+  (`border-rule`, `bg-veil`, `via-scrim-mid`, …) in `app/globals.css`.
 
-Colour tokens live in `app/globals.css` under `@theme`. Typography is Archivo
-(headings and UI) with Crimson Pro for scripture.
+Colour tokens live in `app/globals.css`: the `@theme` block is dark, and
+`:root[data-theme="light"]` overrides it. No component knows which theme is
+active. Typography is Archivo (headings and UI) with Crimson Pro for scripture.
+
+### Contrast is tested
+
+`tests/contrast.test.ts` parses `app/globals.css` and asserts WCAG AA (4.5:1)
+for every text/background pair **in both themes**. Change a colour and the
+tests tell you if you have made it unreadable.
+
+The trap it exists to catch: brand gold `#d4af37` is 1.9:1 on white and
+completely unreadable, so the light theme darkens it to `#7d5f0e`. Red has the
+same problem in reverse, so it is split into two tokens — `--color-blood-bright`
+is red *as text* on a dark ground, `--color-blood-hover` is a *fill* that must
+stay dark enough to carry white text.

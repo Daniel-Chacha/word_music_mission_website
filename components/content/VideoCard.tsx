@@ -8,7 +8,7 @@ export function VideoCard({ video }: { video: Video }) {
   return (
     <article className="group">
       <Link href={`/tv/${video.slug}`} className="block">
-        <div className="grain relative aspect-video overflow-hidden bg-ink-800">
+        <div className="surface-media grain relative aspect-video overflow-hidden bg-ink-800">
           <Image
             src={`https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`}
             alt=""

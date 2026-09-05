@@ -4,7 +4,7 @@ import { formatDate } from '@/lib/format'
 
 export function DevotionalCard({ devotional }: { devotional: Devotional }) {
   return (
-    <article className="group border border-ink-600 p-6 transition-colors hover:border-gold-700">
+    <article className="surface-card group p-6 hover:border-gold-700">
       <p className="eyebrow">{devotional.verseRef}</p>
       <h3 className="mt-3 text-xl font-bold leading-snug">
         <Link

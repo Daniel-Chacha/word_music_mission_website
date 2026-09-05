@@ -95,7 +95,7 @@ export default function SupportPage() {
 
       <Section>
         <Container>
-          <div className="border border-gold-700/40 p-10 lg:p-16">
+          <div className="surface-panel border border-rule p-10 lg:p-16">
             <p className="eyebrow">Where your gift goes</p>
             <ul className="mt-8 grid gap-6 text-bone-dim md:grid-cols-2">
               <li className="border-t border-ink-600 pt-4">

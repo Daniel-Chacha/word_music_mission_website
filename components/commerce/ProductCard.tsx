@@ -9,7 +9,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group">
       <Link href={`/merch/${product.slug}`}>
-        <div className="grain relative aspect-square overflow-hidden bg-ink-800">
+        <div className="surface-media grain relative aspect-square overflow-hidden bg-ink-800">
           <Image
             src={product.images[0].src}
             alt=""

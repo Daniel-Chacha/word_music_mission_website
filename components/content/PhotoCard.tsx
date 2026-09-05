@@ -16,7 +16,7 @@ export function PhotoCard({
     <button
       type="button"
       onClick={() => onOpen(index)}
-      className="grain group relative aspect-[4/3] overflow-hidden bg-ink-800"
+      className="surface-media grain group relative aspect-[4/3] overflow-hidden bg-ink-800"
     >
       <span className="sr-only">Open photo: {photo.alt}</span>
       <Image

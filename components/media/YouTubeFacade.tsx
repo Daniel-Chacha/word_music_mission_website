@@ -46,6 +46,8 @@ export function YouTubeFacade({
         height={360}
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
+      {/* This scrim and the button fill stay dark in both themes: they sit on
+          top of a photograph, not on the page ground. */}
       <span
         aria-hidden="true"
         className="absolute inset-0 flex items-center justify-center bg-ink-900/30"

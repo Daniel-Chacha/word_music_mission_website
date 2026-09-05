@@ -32,7 +32,7 @@ export function ScrimmedImage({
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/50 to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim-mid to-transparent"
       />
       {children && (
         <div className="relative z-10 w-full p-6 lg:p-10">{children}</div>

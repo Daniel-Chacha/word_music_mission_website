@@ -124,7 +124,7 @@ export default function HomePage() {
 
       <Section>
         <Container>
-          <div className="border border-blood/60 bg-ink-800 p-10 lg:p-16">
+          <div className="surface-panel border border-blood-soft p-10 lg:p-16">
             <p className="eyebrow">Support the Mission</p>
             <h2 className="mt-6 max-w-3xl text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">
               Every gift sends the Gospel into another school

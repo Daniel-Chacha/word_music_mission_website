@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/Badge'
 
 export function EventCard({ item }: { item: NewsItem }) {
   return (
-    <article className="group border-t border-gold-700/40 py-8">
+    <article className="group border-t border-rule py-8">
       <div className="flex flex-wrap items-center gap-4">
         <Badge>{NEWS_CATEGORY_LABELS[item.category]}</Badge>
         <p className="text-sm text-bone-dim">{formatDate(item.date)}</p>

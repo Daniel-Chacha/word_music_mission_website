@@ -59,7 +59,7 @@ export default async function OrderPage(
             : 'If you completed payment it may take a moment to confirm. Refresh this page, or message us and we will check.'}
         </p>
 
-        <div className="mt-12 border border-gold-700/40 p-8">
+        <div className="surface-panel mt-12 border border-rule p-8">
           <div className="flex justify-between border-b border-ink-600 pb-4">
             <span className="eyebrow">Order reference</span>
             <span className="font-mono text-gold-300">{order.reference}</span>
@@ -86,7 +86,7 @@ export default async function OrderPage(
             </span>
           </div>
 
-          <div className="flex justify-between border-t border-gold-700/40 pt-4">
+          <div className="flex justify-between border-t border-rule pt-4">
             <span className="eyebrow">Total</span>
             <span className="font-mono text-2xl font-bold text-gold-500">
               {formatKes(order.totalCents)}

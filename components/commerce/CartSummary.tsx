@@ -92,7 +92,7 @@ export function CartSummary({ editable = true }: { editable?: boolean }) {
         </div>
       ))}
 
-      <div className="border-t border-gold-700/40 pt-6">
+      <div className="border-t border-rule pt-6">
         <Row label="Subtotal" value={formatKes(subtotal)} />
         <Row label="Delivery" value={formatKes(SHIPPING_CENTS)} />
         <div className="mt-4 flex justify-between border-t border-ink-600 pt-4">

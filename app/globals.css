@@ -1,30 +1,131 @@
 @import "tailwindcss";
 
-@theme {
-  --color-ink-900: #0a0a0a;
-  --color-ink-800: #121212;
-  --color-ink-700: #1c1c1c;
-  --color-ink-600: #2a2a2a;
+/* ---------------------------------------------------------------------------
+   Dark is the default and the brand identity: black ground, gold hairlines,
+   red reserved for giving. Light is an opt-in alternative built from layered
+   shades of warm white, where elevation is carried by shadow rather than by
+   a lighter surface colour.
 
+   Only the values below change between themes. No component knows which
+   theme is active.
+
+   Opacity modifiers (bg-ink-900/40 and friends) are compiled by Tailwind to
+   a literal hex and would NOT follow a theme override, so every translucent
+   value the design depends on is a named token here instead.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* Surfaces, darkest to lightest in dark theme */
+  --color-ink-900: #0a0a0a;   /* page */
+  --color-ink-800: #121212;   /* alternating section */
+  --color-ink-700: #1c1c1c;   /* raised card */
+  --color-ink-600: #2a2a2a;   /* borders */
+
+  /* Gold */
   --color-gold-700: #9a7b1f;
   --color-gold-500: #d4af37;
   --color-gold-300: #e8ce7a;
 
+  /* Text */
   --color-bone: #faf8f3;
   --color-bone-dim: #a8a49b;
 
+  /* Red — giving actions only.
+     Two distinct jobs, so two tokens: `bright` is red AS TEXT on a dark
+     ground, `hover` is a FILL that must stay dark enough to carry white
+     text. One value cannot satisfy both. */
   --color-blood: #b3121b;
+  --color-blood-hover: #cf1420;
   --color-blood-bright: #e5484d;
+  --color-blood-soft: #b3121b99;
+
+  /* Named translucent values (see note above) */
+  --color-rule: #9a7b1f66;        /* section separators */
+  --color-rule-strong: #9a7b1f99; /* chips, ghost buttons */
+  --color-hairline: #9a7b1f4d;    /* header and footer edges */
+  --color-veil: #0a0a0ae6;        /* sticky header backdrop */
+  --color-overlay: #0a0a0af7;     /* lightbox */
+  --color-scrim: #0a0a0a;         /* photo scrim, opaque end */
+  --color-scrim-mid: #0a0a0a80;   /* photo scrim, mid stop */
+  --color-danger-border: #e5484d99;
+
+  --color-field: #0a0a0a;         /* form input background */
 
   --font-sans: var(--font-archivo);
   --font-display: var(--font-archivo);
   --font-scripture: var(--font-crimson);
 }
 
+:root {
+  /* Dark needs no elevation shadows — contrast between ink shades does it. */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-media: none;
+  --shadow-header: none;
+  --shadow-panel: none;
+  --shadow-field: none;
+  --card-bg: transparent;
+  --grain-opacity: 0.16;
+}
+
+/* ---------------------------------------------------------------------------
+   Light theme.
+
+   The palette is four warm whites rather than one: the page is off-white,
+   alternating sections step down, and cards are pure white lifted off that
+   ground by shadow. Gold is darkened substantially — #d4af37 on white is
+   1.9:1 and unreadable — and red is darkened so it still passes AA as text.
+--------------------------------------------------------------------------- */
+
+:root[data-theme="light"] {
+  --color-ink-900: #fbfaf7;   /* page — warm near-white */
+  --color-ink-800: #f2f0e9;   /* alternating section — a step down */
+  --color-ink-700: #ffffff;   /* raised card — pure white, lifted by shadow */
+  --color-ink-600: #e3dfd3;   /* borders */
+
+  --color-gold-700: #c4ac6a;  /* decorative only */
+  --color-gold-500: #7d5f0e;  /* 5.7:1 on the page ground */
+  --color-gold-300: #634a0b;  /* 8.2:1 — hover and emphasis */
+
+  --color-bone: #14120e;      /* 18:1 */
+  --color-bone-dim: #585349;  /* 7.4:1 */
+
+  --color-blood: #a50f18;
+  --color-blood-hover: #7f0a11;
+  --color-blood-bright: #7f0a11;
+  --color-blood-soft: #a50f1859;
+
+  --color-rule: #c9c3ae99;
+  --color-rule-strong: #b3aa8e;
+  --color-hairline: #ded8c6;
+  --color-veil: #fbfaf7e6;
+  --color-overlay: #fbfaf7fa;
+  --color-scrim: #fbfaf7;
+  --color-scrim-mid: #fbfaf799;
+  --color-danger-border: #a50f1859;
+
+  --color-field: #ffffff;
+
+  /* Elevation is the light theme's whole separation strategy. */
+  --shadow-card: 0 1px 2px rgb(20 18 14 / 0.04), 0 4px 12px rgb(20 18 14 / 0.06);
+  --shadow-card-hover: 0 2px 4px rgb(20 18 14 / 0.06), 0 12px 24px rgb(20 18 14 / 0.10);
+  --shadow-media: 0 2px 6px rgb(20 18 14 / 0.07), 0 14px 32px rgb(20 18 14 / 0.10);
+  --shadow-header: 0 1px 0 rgb(20 18 14 / 0.05), 0 8px 24px rgb(20 18 14 / 0.05);
+  --shadow-panel: 0 4px 10px rgb(20 18 14 / 0.05), 0 20px 48px rgb(20 18 14 / 0.08);
+  --shadow-field: inset 0 1px 2px rgb(20 18 14 / 0.07);
+  --card-bg: var(--color-ink-700);
+  --grain-opacity: 0.07;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
   }
 
   body {
@@ -78,9 +179,54 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.16;
+    opacity: var(--grain-opacity);
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Elevation surfaces. In dark these are borders only; in light the shadow
+     tokens above give each one its lift off the page. */
+  .surface-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--color-ink-600);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 200ms, border-color 200ms;
+  }
+
+  .surface-card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .surface-media {
+    box-shadow: var(--shadow-media);
+  }
+
+  .surface-panel {
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .surface-header {
+    box-shadow: var(--shadow-header);
+  }
+
+  .field {
+    background-color: var(--color-field);
+    box-shadow: var(--shadow-field);
+  }
+
+  /* Theme toggle swaps its icon and its accessible label with CSS, so the
+     button holds no React state and cannot mismatch during hydration. */
+  .theme-when-light {
+    display: none;
+  }
+
+  :root[data-theme="light"] .theme-when-light {
+    display: revert;
+  }
+
+  :root[data-theme="light"] .theme-when-dark {
+    display: none;
   }
 }
 
