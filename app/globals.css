@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ink-900: #0a0a0a;
+  --color-ink-800: #121212;
+  --color-ink-700: #1c1c1c;
+  --color-ink-600: #2a2a2a;
+
+  --color-gold-700: #9a7b1f;
+  --color-gold-500: #d4af37;
+  --color-gold-300: #e8ce7a;
+
+  --color-bone: #faf8f3;
+  --color-bone-dim: #a8a49b;
+
+  --color-blood: #b3121b;
+  --color-blood-bright: #e5484d;
+
+  --font-sans: var(--font-archivo);
+  --font-display: var(--font-archivo);
+  --font-scripture: var(--font-crimson);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-ink-900);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-500);
+    color: var(--color-ink-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--color-bone);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold-500);
+  }
+
+  .scripture {
+    font-family: var(--font-scripture);
+    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    line-height: 1.5;
+    color: var(--color-bone);
+  }
+
+  /* Uniform photo treatment: fine grain so mixed-quality phone photos cohere. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
