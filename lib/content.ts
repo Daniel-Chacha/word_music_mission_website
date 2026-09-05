@@ -14,7 +14,11 @@ export function latest<T extends { date: string }>(items: T[], count?: number): 
   return count === undefined ? sorted : sorted.slice(0, count)
 }
 
-export function byCategory<C, T extends { category: C }>(items: T[], category: C): T[] {
+/** Category is constrained to the union actually present on T. */
+export function byCategory<T extends { category: string }>(
+  items: T[],
+  category: T['category'],
+): T[] {
   return items.filter((item) => item.category === category)
 }
 
