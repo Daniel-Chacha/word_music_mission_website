@@ -1,69 +1,146 @@
-import Image from "next/image";
+import { site } from '@/content/site'
+import { ministry } from '@/content/ministry'
+import { videos } from '@/content/videos'
+import { latest, todaysDevotional, currentMemoryVerse } from '@/lib/content'
+import { Container } from '@/components/layout/Container'
+import { Section } from '@/components/layout/Section'
+import { Button } from '@/components/ui/Button'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { ScrimmedImage } from '@/components/media/ScrimmedImage'
+import { ScriptureBlock } from '@/components/content/ScriptureBlock'
+import { StatCounter } from '@/components/content/StatCounter'
+import { VideoCard } from '@/components/content/VideoCard'
 
-export default function Home() {
+export default function HomePage() {
+  const featured = latest(videos, 3)
+  const devotional = todaysDevotional()
+  const verse = currentMemoryVerse()
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <>
+      <ScrimmedImage
+        photo={{
+          // TODO: Replace with a real photograph from a high school outreach.
+          src: '/images/placeholder.jpg',
+          alt: '',
+          width: 1600,
+          height: 1067,
+        }}
+        priority
+        sizes="100vw"
+        className="flex min-h-[85vh] items-end"
+      >
+        <Container className="pb-4">
+          <p className="eyebrow">Word Mission Team · Word Mission TV</p>
+          <h1 className="mt-6 max-w-4xl text-[clamp(3rem,9vw,7rem)] font-black leading-[0.92] tracking-[-0.03em]">
+            Reaching the next generation
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+          <p className="mt-8 max-w-2xl text-lg text-bone-dim">{site.missionStatement}</p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Button href="/tv" variant="gold" size="lg">
+              Watch Videos
+            </Button>
+            <Button href="/support" variant="give" size="lg">
+              Support the Mission
+            </Button>
+            <Button href="/word" variant="ghost" size="lg">
+              Read the Word
+            </Button>
+          </div>
+        </Container>
+      </ScrimmedImage>
+
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Our Impact"
+            number="01"
+            title="What God is doing through this team"
+            description="Every figure below represents students we have stood in front of, prayed with, and continue to walk alongside."
+          />
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {ministry.stats.map((stat) => (
+              <StatCounter key={stat.label} stat={stat} />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-ink-800">
+        <Container className="grid gap-14 lg:grid-cols-2">
+          <div>
+            <SectionHeading
+              eyebrow="Who We Are"
+              number="02"
+              title="We go where the students are"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+            <p className="mt-8 text-bone-dim">{ministry.mission}</p>
+            <Button href="/about" variant="ghost" className="mt-8">
+              About the team
+            </Button>
+          </div>
+          <ScriptureBlock reference={verse.reference} text={verse.text} />
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading eyebrow="Word Mission TV" number="03" title="Watch the mission" />
+            <Button href="/tv" variant="ghost">
+              All videos
+            </Button>
+          </div>
+          <div className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            {featured.map((video) => (
+              <VideoCard key={video.slug} video={video} />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-ink-800">
+        <Container className="grid gap-14 lg:grid-cols-[1fr_1.2fr]">
+          <SectionHeading
+            eyebrow="The Word"
+            number="04"
+            title="Today's devotion"
+            description="A short word for students, every day."
+          />
+          <div>
+            <ScriptureBlock reference={devotional.verseRef} text={devotional.verseText} />
+            <h3 className="mt-10 text-2xl font-bold">{devotional.title}</h3>
+            <p className="mt-4 text-bone-dim">{devotional.body[0]}</p>
+            <Button
+              href={`/word/devotionals/${devotional.slug}`}
+              variant="ghost"
+              className="mt-8"
+            >
+              Read today&rsquo;s word
+            </Button>
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <div className="border border-blood/60 bg-ink-800 p-10 lg:p-16">
+            <p className="eyebrow">Support the Mission</p>
+            <h2 className="mt-6 max-w-3xl text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">
+              Every gift sends the Gospel into another school
+            </h2>
+            <p className="mt-6 max-w-2xl text-bone-dim">{site.giving.message}</p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button href="/support" variant="give" size="lg">
+                Give now
+              </Button>
+              <Button href="/contact" variant="ghost" size="lg">
+                Invite us to your school
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </Section>
+    </>
+  )
 }

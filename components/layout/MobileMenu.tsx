@@ -6,26 +6,27 @@ import { usePathname } from 'next/navigation'
 import { site } from '@/content/site'
 
 export function MobileMenu() {
-  const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  // The menu remembers the route it was opened on, so `open` is derived:
+  // any navigation makes the stored path stale and closes it. No effect,
+  // and the back button closes it as reliably as a link does.
+  const [openPath, setOpenPath] = useState<string | null>(null)
+  const open = openPath !== null && openPath === pathname
+
   const triggerRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
-
-  // Close on navigation.
-  useEffect(() => {
-    setOpen(false)
-  }, [pathname])
 
   useEffect(() => {
     if (!open) return
 
+    const trigger = triggerRef.current
     const previouslyFocused = document.activeElement as HTMLElement | null
     document.body.style.overflow = 'hidden'
     panelRef.current?.querySelector<HTMLElement>('a, button')?.focus()
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
-        setOpen(false)
+        setOpenPath(null)
         return
       }
       if (event.key !== 'Tab') return
@@ -51,7 +52,7 @@ export function MobileMenu() {
     return () => {
       document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = ''
-      ;(previouslyFocused ?? triggerRef.current)?.focus()
+      ;(previouslyFocused ?? trigger)?.focus()
     }
   }, [open])
 
@@ -60,7 +61,7 @@ export function MobileMenu() {
       <button
         ref={triggerRef}
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => setOpenPath(pathname)}
         aria-expanded={open}
         aria-controls="mobile-menu"
         className="p-2 text-bone lg:hidden"
@@ -81,7 +82,11 @@ export function MobileMenu() {
           className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ink-900 px-6 py-6 lg:hidden"
         >
           <div className="flex justify-end">
-            <button type="button" onClick={() => setOpen(false)} className="p-2 text-bone">
+            <button
+              type="button"
+              onClick={() => setOpenPath(null)}
+              className="p-2 text-bone"
+            >
               <span className="sr-only">Close menu</span>
               <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" />
@@ -94,6 +99,7 @@ export function MobileMenu() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setOpenPath(null)}
                 className="border-b border-ink-600 py-4 text-2xl font-bold tracking-[-0.01em] text-bone"
               >
                 {item.label}
@@ -101,6 +107,7 @@ export function MobileMenu() {
             ))}
             <Link
               href="/support"
+              onClick={() => setOpenPath(null)}
               className="mt-6 bg-blood px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.12em] text-white"
             >
               Support Us

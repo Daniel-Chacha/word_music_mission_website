@@ -121,7 +121,7 @@ describe('content query helpers', () => {
   })
 
   it('filters by category', () => {
-    const worship = byCategory(videos, 'worship' as const)
+    const worship = byCategory(videos, 'worship')
     expect(worship.length).toBeGreaterThan(0)
     expect(worship.every((v) => v.category === 'worship')).toBe(true)
   })
