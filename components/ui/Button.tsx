@@ -5,7 +5,7 @@ type Variant = 'gold' | 'give' | 'ghost'
 const VARIANTS: Record<Variant, string> = {
   gold: 'bg-gold-500 text-ink-900 hover:bg-gold-300',
   // The only red surface on the site. White on --color-blood is 5.9:1.
-  give: 'bg-blood text-white hover:bg-blood-bright',
+  give: 'bg-blood text-white hover:bg-blood-hover',
   ghost: 'border border-gold-700 text-bone hover:border-gold-500 hover:text-gold-300',
 }
 

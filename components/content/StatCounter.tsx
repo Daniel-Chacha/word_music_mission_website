@@ -61,7 +61,7 @@ export function StatCounter({ stat }: { stat: ImpactStat }) {
   }, [stat.value])
 
   return (
-    <div ref={ref} className="border-t border-gold-700/40 pt-6">
+    <div ref={ref} className="border-t border-rule pt-6">
       <p className="text-[clamp(2.5rem,7vw,5rem)] font-black leading-none tabular-nums text-gold-500">
         {value.toLocaleString('en-US')}
         {stat.suffix}

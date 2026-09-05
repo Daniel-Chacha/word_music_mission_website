@@ -76,7 +76,7 @@ export function CheckoutForm() {
       </div>
 
       {error && (
-        <div role="alert" className="mt-8 border border-blood-bright/60 bg-ink-800 p-5">
+        <div role="alert" className="surface-card mt-8 border-danger-border p-5">
           <p className="text-sm text-blood-bright">{error}</p>
           <p className="mt-2 text-sm text-bone-dim">
             You can also order on WhatsApp from any product page.

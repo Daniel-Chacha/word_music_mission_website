@@ -13,7 +13,7 @@ export function Field({
 }) {
   const id = `field-${name}`
   const shared =
-    'mt-2 w-full border border-ink-600 bg-ink-900 px-4 py-3 text-bone placeholder:text-bone-dim focus:border-gold-500 focus:outline-none'
+    'field mt-2 w-full border border-ink-600 px-4 py-3 text-bone placeholder:text-bone-dim focus:border-gold-500 focus:outline-none'
 
   return (
     <div>

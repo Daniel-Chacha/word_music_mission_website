@@ -115,7 +115,7 @@ function HubLink({
   return (
     <Link
       href={href}
-      className="group border-t border-gold-700/40 pt-6 transition-colors hover:border-gold-500"
+      className="group border-t border-rule pt-6 transition-colors hover:border-gold-500"
     >
       <p className="eyebrow">{eyebrow}</p>
       <h3 className="mt-3 text-2xl font-bold transition-colors group-hover:text-gold-300">

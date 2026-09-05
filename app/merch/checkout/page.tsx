@@ -26,7 +26,7 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        <div className="lg:border-l lg:border-gold-700/40 lg:pl-14">
+        <div className="lg:border-l lg:border-rule lg:pl-14">
           <p className="eyebrow">Your order</p>
           <div className="mt-8">
             <CartSummary editable={false} />

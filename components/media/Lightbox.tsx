@@ -51,7 +51,7 @@ export function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label={`Photo ${index + 1} of ${photos.length}`}
-      className="fixed inset-0 z-50 flex flex-col bg-ink-900/[0.97] p-4 lg:p-8"
+      className="fixed inset-0 z-50 flex flex-col bg-overlay p-4 lg:p-8"
     >
       <div className="flex items-center justify-between">
         <p className="eyebrow">

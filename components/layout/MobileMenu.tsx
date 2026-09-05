@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { site } from '@/content/site'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 export function MobileMenu() {
   const pathname = usePathname()
@@ -81,7 +82,8 @@ export function MobileMenu() {
           aria-label="Site menu"
           className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ink-900 px-6 py-6 lg:hidden"
         >
-          <div className="flex justify-end">
+          <div className="flex items-center justify-between">
+            <ThemeToggle />
             <button
               type="button"
               onClick={() => setOpenPath(null)}

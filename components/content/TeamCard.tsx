@@ -5,7 +5,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
   return (
     <article>
       {member.photo && (
-        <div className="grain relative aspect-[3/4] overflow-hidden bg-ink-800">
+        <div className="surface-media grain relative aspect-[3/4] overflow-hidden bg-ink-800">
           <Image
             src={member.photo.src}
             alt={member.photo.alt}

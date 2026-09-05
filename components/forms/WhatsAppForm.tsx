@@ -43,7 +43,7 @@ export function WhatsAppForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="border border-ink-600 p-8">
+    <form onSubmit={onSubmit} className="surface-card p-8">
       <h3 className="text-xl font-bold">{heading}</h3>
       <p className="mt-3 text-sm text-bone-dim">{intro}</p>
 

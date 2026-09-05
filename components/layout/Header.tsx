@@ -4,10 +4,11 @@ import { Container } from './Container'
 import { MobileMenu } from './MobileMenu'
 import { Button } from '@/components/ui/Button'
 import { CartLink } from '@/components/commerce/CartLink'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-gold-700/30 bg-ink-900/90 backdrop-blur">
+    <header className="surface-header sticky top-0 z-40 border-b border-hairline bg-veil backdrop-blur">
       <Container className="flex items-center justify-between gap-6 py-4">
         <Link href="/" className="flex flex-col leading-none">
           <span className="text-lg font-extrabold uppercase tracking-[0.08em] text-bone">
@@ -31,7 +32,8 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <ThemeToggle />
           <CartLink />
           <Button href="/support" variant="give" className="hidden sm:inline-flex">
             Support Us

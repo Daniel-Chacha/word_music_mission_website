@@ -26,7 +26,7 @@ export default function GalleryPage() {
           {latest(albums).map((album) => (
             <article key={album.slug} className="group">
               <Link href={`/gallery/${album.slug}`}>
-                <div className="grain relative aspect-[4/3] overflow-hidden bg-ink-800">
+                <div className="surface-media grain relative aspect-[4/3] overflow-hidden bg-ink-800">
                   <Image
                     src={album.cover.src}
                     alt=""

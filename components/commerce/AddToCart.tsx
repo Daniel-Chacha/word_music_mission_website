@@ -48,7 +48,7 @@ export function AddToCart({
                 className={`cursor-pointer border px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.12em] transition-colors ${
                   variantId === v.id
                     ? 'border-gold-500 bg-gold-500 text-ink-900'
-                    : 'border-gold-700/60 text-bone-dim hover:border-gold-500'
+                    : 'border-rule-strong text-bone-dim hover:border-gold-500'
                 } ${v.inStock ? '' : 'cursor-not-allowed opacity-40'}`}
               >
                 <input

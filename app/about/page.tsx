@@ -47,7 +47,7 @@ export default function AboutPage() {
           <SectionHeading eyebrow="What We Stand On" number="03" title="Our values" />
           <div className="mt-14 grid gap-10 md:grid-cols-2">
             {ministry.values.map((value) => (
-              <div key={value.title} className="border-t border-gold-700/40 pt-6">
+              <div key={value.title} className="border-t border-rule pt-6">
                 <h3 className="text-xl font-bold">{value.title}</h3>
                 <p className="mt-3 text-bone-dim">{value.description}</p>
               </div>
