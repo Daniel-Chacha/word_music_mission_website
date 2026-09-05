@@ -185,3 +185,48 @@ export interface NewsItem {
   location?: string
   image?: Photo
 }
+
+export interface ProductVariant {
+  id: string
+  label: string
+  priceCents: number
+  inStock: boolean
+}
+
+export type ProductCategory = 'apparel' | 'accessory' | 'book'
+
+export interface Product {
+  slug: string
+  name: string
+  category: ProductCategory
+  description: string
+  details: string[]
+  images: Photo[]
+  variants: ProductVariant[]
+  featured?: boolean
+}
+
+/** What the browser sends at checkout. Deliberately carries no price. */
+export interface CartLine {
+  slug: string
+  variantId: string
+  quantity: number
+}
+
+export interface PricedLine {
+  slug: string
+  variantId: string
+  quantity: number
+  name: string
+  variantLabel: string
+  unitPriceCents: number
+  lineTotalCents: number
+}
+
+export interface PricedOrder {
+  lines: PricedLine[]
+  subtotalCents: number
+  shippingCents: number
+  totalCents: number
+  rejected: CartLine[]
+}

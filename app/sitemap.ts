@@ -4,6 +4,7 @@ import { videos } from '@/content/videos'
 import { albums } from '@/content/gallery'
 import { devotionals, bibleStudies } from '@/content/word'
 import { newsItems } from '@/content/news'
+import { products } from '@/content/merch'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
@@ -17,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/word/sermons',
     '/word/notes',
     '/news',
+    '/merch',
     '/support',
     '/contact',
   ]
@@ -27,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...devotionals.map((d) => `/word/devotionals/${d.slug}`),
     ...bibleStudies.map((s) => `/word/bible-studies/${s.slug}`),
     ...newsItems.map((n) => `/news/${n.slug}`),
+    ...products.map((p) => `/merch/${p.slug}`),
   ]
 
   return [...staticPaths, ...dynamicPaths].map((path) => ({

@@ -92,7 +92,7 @@ export default function AboutPage() {
               <TeamCard key={member.name} member={member} />
             ))}
           </div>
-          <Button href="/contact" variant="give" className="mt-14">
+          <Button href="/contact" variant="gold" className="mt-14">
             Invite us to your school
           </Button>
         </Container>
