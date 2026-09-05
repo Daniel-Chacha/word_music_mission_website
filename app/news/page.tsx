@@ -27,7 +27,7 @@ export default function NewsPage() {
         </div>
 
         <div className="mt-14 flex flex-wrap gap-4">
-          <Button href="/contact" variant="give">
+          <Button href="/contact" variant="gold">
             Send a prayer request
           </Button>
           <Button href="/contact" variant="ghost">
