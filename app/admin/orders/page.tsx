@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { listOrders, isCommerceEnabled } from '@/lib/orders'
+import { requireAdmin } from '@/lib/admin-guard'
 import { formatKes } from '@/lib/format'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
@@ -8,6 +9,10 @@ export const metadata: Metadata = { robots: { index: false, follow: false } }
 export const dynamic = 'force-dynamic'
 
 export default async function AdminOrdersPage() {
+  // Authorization first: never leak configuration state or order data to an
+  // unauthenticated visitor, even if the proxy was bypassed.
+  await requireAdmin()
+
   if (!isCommerceEnabled()) {
     return (
       <Section>
