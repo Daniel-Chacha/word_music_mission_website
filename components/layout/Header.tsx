@@ -3,6 +3,7 @@ import { site } from '@/content/site'
 import { Container } from './Container'
 import { MobileMenu } from './MobileMenu'
 import { Button } from '@/components/ui/Button'
+import { CartLink } from '@/components/commerce/CartLink'
 
 export function Header() {
   return (
@@ -31,6 +32,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <CartLink />
           <Button href="/support" variant="give" className="hidden sm:inline-flex">
             Support Us
           </Button>
