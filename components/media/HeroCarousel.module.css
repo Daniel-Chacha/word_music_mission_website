@@ -1,0 +1,139 @@
+/* Hero carousel motion.
+   HeroCarousel measures the first thumbnail before each move and writes its
+   box to --from-left / --from-top / --from-w / --from-h on the carousel root,
+   plus --slot (one thumbnail width and its gap). Every keyframe below reads
+   those, so the photos grow out of, and shrink back into, the thumbnail
+   strip wherever the layout has put it. */
+
+/* NEXT — the incoming photo grows out of the first thumbnail to full bleed. */
+.expand {
+  overflow: hidden;
+  animation: expand 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes expand {
+  from {
+    left: var(--from-left);
+    top: var(--from-top);
+    width: var(--from-w);
+    height: var(--from-h);
+    border-radius: 20px;
+  }
+  to {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+/* PREV — the outgoing photo shrinks back into the first thumbnail slot,
+   revealing the previous photo underneath, then fades out. */
+.shrink {
+  overflow: hidden;
+  animation: shrink 0.8s cubic-bezier(0.64, 0, 0.78, 0) forwards;
+}
+
+@keyframes shrink {
+  from {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    left: var(--from-left);
+    top: var(--from-top);
+    width: var(--from-w);
+    height: var(--from-h);
+    border-radius: 20px;
+    opacity: 0;
+  }
+}
+
+/* Thumbnail strip. On next the strip slides left one slot and the photo
+   that just left the stage grows in at the end. On prev it slides right one
+   slot and the new first thumbnail fades in as the shrinking photo lands. */
+.stripNext {
+  animation: stripNext 0.5s ease-out;
+}
+
+@keyframes stripNext {
+  from {
+    transform: translateX(var(--slot));
+  }
+}
+
+.stripPrev {
+  animation: stripPrev 0.5s ease-out;
+}
+
+@keyframes stripPrev {
+  from {
+    transform: translateX(calc(-1 * var(--slot)));
+  }
+}
+
+.grow {
+  animation: grow 0.5s ease-out;
+}
+
+@keyframes grow {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+.landing {
+  animation: landing 0.8s linear;
+}
+
+@keyframes landing {
+  from,
+  80% {
+    opacity: 0;
+  }
+}
+
+/* Headline copy rises out of a blur, one line after another, once the new
+   photo has mostly arrived. */
+.reveal > * {
+  opacity: 0;
+  transform: translateY(50px);
+  filter: blur(20px);
+  animation: reveal 0.5s ease-out forwards;
+}
+
+.reveal > :nth-child(1) { animation-delay: 0.5s; }
+.reveal > :nth-child(2) { animation-delay: 0.65s; }
+.reveal > :nth-child(3) { animation-delay: 0.8s; }
+.reveal > :nth-child(4) { animation-delay: 0.95s; }
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Time left until the next autoplay advance. */
+.progress {
+  transform-origin: left;
+  animation: progress var(--autoplay-ms) linear forwards;
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

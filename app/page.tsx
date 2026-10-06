@@ -1,12 +1,13 @@
 import { site } from '@/content/site'
 import { ministry } from '@/content/ministry'
 import { videos } from '@/content/videos'
+import { heroSlides } from '@/content/home'
 import { latest, todaysDevotional, currentMemoryVerse } from '@/lib/content'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { Button } from '@/components/ui/Button'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { ScrimmedImage } from '@/components/media/ScrimmedImage'
+import { HeroCarousel } from '@/components/media/HeroCarousel'
 import { ScriptureBlock } from '@/components/content/ScriptureBlock'
 import { StatCounter } from '@/components/content/StatCounter'
 import { VideoCard } from '@/components/content/VideoCard'
@@ -18,37 +19,24 @@ export default function HomePage() {
 
   return (
     <>
-      <ScrimmedImage
-        photo={{
-          // TODO: Replace with a real photograph from a high school outreach.
-          src: '/images/placeholder.jpg',
-          alt: '',
-          width: 1600,
-          height: 1067,
-        }}
-        priority
-        sizes="100vw"
-        className="flex min-h-[85vh] items-end"
-      >
-        <Container className="pb-4">
-          <p className="eyebrow">Word Mission Team · Word Mission TV</p>
-          <h1 className="mt-6 max-w-4xl text-[clamp(3rem,9vw,7rem)] font-black leading-[0.92] tracking-[-0.03em]">
-            Reaching the next generation
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg text-bone-dim">{site.missionStatement}</p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="/tv" variant="gold" size="lg">
-              Watch Videos
-            </Button>
-            <Button href="/support" variant="give" size="lg">
-              Support the Mission
-            </Button>
-            <Button href="/word" variant="ghost" size="lg">
-              Read the Word
-            </Button>
-          </div>
-        </Container>
-      </ScrimmedImage>
+      <HeroCarousel slides={heroSlides} label="Photos from the mission">
+        <p className="eyebrow">Word Mission Team · Word Mission TV</p>
+        <h1 className="mt-4 text-[clamp(2.5rem,6vw,5.5rem)] sm:mt-6 font-black leading-[0.92] tracking-[-0.03em]">
+          Reaching the next generation
+        </h1>
+        <p className="mt-5 max-w-2xl text-base text-bone-dim sm:mt-8 sm:text-lg max-sm:[@media(max-height:740px)]:hidden">{site.missionStatement}</p>
+        <div className="mt-6 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
+          <Button href="/tv" variant="gold" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
+            Watch Videos
+          </Button>
+          <Button href="/support" variant="give" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
+            Support the Mission
+          </Button>
+          <Button href="/word" variant="ghost" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
+            Read the Word
+          </Button>
+        </div>
+      </HeroCarousel>
 
       <Section>
         <Container>
@@ -130,11 +118,11 @@ export default function HomePage() {
               Every gift sends the Gospel into another school
             </h2>
             <p className="mt-6 max-w-2xl text-bone-dim">{site.giving.message}</p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Button href="/support" variant="give" size="lg">
+            <div className="mt-6 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
+              <Button href="/support" variant="give" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
                 Give now
               </Button>
-              <Button href="/contact" variant="ghost" size="lg">
+              <Button href="/contact" variant="ghost" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
                 Invite us to your school
               </Button>
             </div>

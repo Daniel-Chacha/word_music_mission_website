@@ -9,7 +9,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle'
 export function Header() {
   return (
     <header className="surface-header sticky top-0 z-40 border-b border-hairline bg-veil backdrop-blur">
-      <Container className="flex items-center justify-between gap-6 py-4">
+      <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
         <Link href="/" className="flex flex-col leading-none">
           <span className="text-lg font-extrabold uppercase tracking-[0.08em] text-bone">
             Word Mission
