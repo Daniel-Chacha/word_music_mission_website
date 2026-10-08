@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { site } from '@/content/site'
 import { Container } from './Container'
@@ -5,16 +6,26 @@ import { MobileMenu } from './MobileMenu'
 import { Button } from '@/components/ui/Button'
 import { CartLink } from '@/components/commerce/CartLink'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import logo from '@/public/images/wm_logo.jpeg'
 
 export function Header() {
   return (
-    <header className="surface-header sticky top-0 z-40 border-b border-hairline bg-veil backdrop-blur">
+    <header className="on-brand surface-header sticky top-0 z-40">
       <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
-        <Link href="/" className="flex flex-col leading-none">
-          <span className="text-lg font-extrabold uppercase tracking-[0.08em] text-bone">
-            Word Mission
+        <Link href="/" className="flex shrink-0 items-center gap-3 leading-none">
+          <Image
+            src={logo}
+            alt=""
+            loading="eager"
+            sizes="80px"
+            className="h-11 w-auto rounded-sm"
+          />
+          <span className="flex flex-col max-sm:sr-only">
+            <span className="text-lg font-extrabold uppercase tracking-[0.08em] text-bone">
+              Word Mission
+            </span>
+            <span className="eyebrow mt-1">Team · TV</span>
           </span>
-          <span className="eyebrow mt-1">Team · TV</span>
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">

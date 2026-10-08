@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { site } from '@/content/site'
 import { ministry } from '@/content/ministry'
 import { videos } from '@/content/videos'
@@ -11,6 +12,8 @@ import { HeroCarousel } from '@/components/media/HeroCarousel'
 import { ScriptureBlock } from '@/components/content/ScriptureBlock'
 import { StatCounter } from '@/components/content/StatCounter'
 import { VideoCard } from '@/components/content/VideoCard'
+import pixels from '@/components/ui/pixels.module.css'
+import teamInSchool from '@/public/images/IMG_20260920_084503_143.jpg'
 
 export default function HomePage() {
   const featured = latest(videos, 3)
@@ -29,16 +32,16 @@ export default function HomePage() {
           <Button href="/tv" variant="gold" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
             Watch Videos
           </Button>
-          <Button href="/support" variant="give" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
+          {/* <Button href="/support" variant="give" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
             Support the Mission
-          </Button>
+          </Button> */}
           <Button href="/word" variant="ghost" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
             Read the Word
           </Button>
         </div>
       </HeroCarousel>
 
-      <Section>
+      <Section className="bg-azure">
         <Container>
           <SectionHeading
             eyebrow="Our Impact"
@@ -54,7 +57,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <Section className="bg-ink-800">
+      <Section className={`bg-ink-800 border-y border-black/10 ${pixels.pixels}`}>
         <Container className="grid gap-14 lg:grid-cols-2">
           <div>
             <SectionHeading
@@ -71,7 +74,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <Section>
+      <Section className="bg-azure">
         <Container>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="Word Mission TV" number="03" title="Watch the mission" />
@@ -87,7 +90,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <Section className="bg-ink-800">
+      <Section className={`bg-ink-800 border-y border-black/10 ${pixels.pixels}`}>
         <Container className="grid gap-14 lg:grid-cols-[1fr_1.2fr]">
           <SectionHeading
             eyebrow="The Word"
@@ -112,19 +115,35 @@ export default function HomePage() {
 
       <Section>
         <Container>
-          <div className="surface-panel border border-blood-soft p-10 lg:p-16">
-            <p className="eyebrow">Support the Mission</p>
-            <h2 className="mt-6 max-w-3xl text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">
-              Every gift sends the Gospel into another school
-            </h2>
-            <p className="mt-6 max-w-2xl text-bone-dim">{site.giving.message}</p>
-            <div className="mt-6 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
-              <Button href="/support" variant="give" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
-                Give now
-              </Button>
-              <Button href="/contact" variant="ghost" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
-                Invite us to your school
-              </Button>
+          <div className="on-photo grain surface-panel relative overflow-hidden bg-scrim p-10 lg:p-16">
+            <Image
+              src={teamInSchool}
+              alt=""
+              fill
+              sizes="(min-width: 1280px) 1184px, 100vw"
+              placeholder="blur"
+              className="object-cover object-[60%_center]"
+            />
+            {/* Darker on the left, where the text sits, so the team member and
+                the hall stay visible on the right. */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-scrim via-scrim-mid via-60% to-scrim-mid lg:to-transparent"
+            />
+            <div className="relative">
+              <p className="eyebrow">Support the Mission</p>
+              <h2 className="mt-6 max-w-3xl text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-[-0.02em]">
+                Every gift sends the Gospel into another school
+              </h2>
+              <p className="mt-6 max-w-2xl text-bone-dim">{site.giving.message}</p>
+              <div className="mt-6 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
+                <Button href="/support" variant="give" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
+                  Give now
+                </Button>
+                <Button href="/contact" variant="ghost" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
+                  Invite us to your school
+                </Button>
+              </div>
             </div>
           </div>
         </Container>

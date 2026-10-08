@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Dark is the default and the brand identity: black ground, gold hairlines,
-   red reserved for giving. Light is an opt-in alternative built from layered
-   shades of warm white, where elevation is carried by shadow rather than by
-   a lighter surface colour.
+   Dark is the default and the brand identity: black ground, copper accents
+   taken from the WM TV logo, red reserved for giving. Light is an opt-in
+   alternative built from layered shades of warm white, where elevation is
+   carried by shadow rather than by a lighter surface colour.
 
    Only the values below change between themes. No component knows which
    theme is active.
@@ -21,10 +21,15 @@
   --color-ink-700: #1c1c1c;   /* raised card */
   --color-ink-600: #2a2a2a;   /* borders */
 
-  /* Gold */
-  --color-gold-700: #9a7b1f;
-  --color-gold-500: #d4af37;
-  --color-gold-300: #e8ce7a;
+  /* Accent. The `gold` name predates the logo; the values are its copper,
+     with 500 sampled straight from wm_logo.jpeg. */
+  --color-gold-700: #b06c3a;
+  --color-gold-500: #e19c65;
+  --color-gold-300: #efbd93;
+
+  /* Logo copper as a FILL. Unlike gold-500 it does not darken in light theme,
+     so a copper band reads as the logo in both. Pair with `.on-brand`. */
+  --color-brand: #e19c65;
 
   /* Text */
   --color-bone: #faf8f3;
@@ -40,9 +45,9 @@
   --color-blood-soft: #b3121b99;
 
   /* Named translucent values (see note above) */
-  --color-rule: #9a7b1f66;        /* section separators */
-  --color-rule-strong: #9a7b1f99; /* chips, ghost buttons */
-  --color-hairline: #9a7b1f4d;    /* header and footer edges */
+  --color-rule: #b06c3a66;        /* section separators */
+  --color-rule-strong: #b06c3a99; /* chips, ghost buttons */
+  --color-hairline: #b06c3a4d;    /* header and footer edges */
   --color-veil: #0a0a0ae6;        /* sticky header backdrop */
   --color-overlay: #0a0a0af7;     /* lightbox */
   --color-scrim: #0a0a0a;         /* photo scrim, opaque end */
@@ -50,6 +55,7 @@
   --color-danger-border: #e5484d99;
 
   --color-field: #0a0a0a;         /* form input background */
+  --color-azure: #0a0a0a;         /* light-only tint; dark keeps the page colour */
 
   --font-sans: var(--font-archivo);
   --font-display: var(--font-archivo);
@@ -57,7 +63,7 @@
 }
 
 :root {
-  /* Header bar height (excluding its 1px bottom border). Full-screen sections
+  /* Header bar height (it has no border). Full-screen sections
      subtract this so they end exactly at the bottom of the viewport. */
   --header-h: 4.5rem;
 
@@ -75,21 +81,21 @@
 /* ---------------------------------------------------------------------------
    Light theme.
 
-   The palette is four warm whites rather than one: the page is off-white,
-   alternating sections step down, and cards are pure white lifted off that
-   ground by shadow. Gold is darkened substantially — #d4af37 on white is
-   1.9:1 and unreadable — and red is darkened so it still passes AA as text.
+   The page is pure white; alternating sections and cards are both azure
+   #f0ffff, so a card is separated from its section by shadow alone. Copper
+   is darkened substantially — the logo's #e19c65 on white is 2.2:1 and
+   unreadable — and red is darkened so it still passes AA as text.
 --------------------------------------------------------------------------- */
 
 :root[data-theme="light"] {
-  --color-ink-900: #fbfaf7;   /* page — warm near-white */
-  --color-ink-800: #f2f0e9;   /* alternating section — a step down */
-  --color-ink-700: #ffffff;   /* raised card — pure white, lifted by shadow */
+  --color-ink-900: #ffffff;   /* page — pure white */
+  --color-ink-800: #f0ffff;   /* alternating section — azure, same as the cards */
+  --color-ink-700: #f0ffff;   /* raised card — azure, lifted by shadow */
   --color-ink-600: #e3dfd3;   /* borders */
 
-  --color-gold-700: #c4ac6a;  /* decorative only */
-  --color-gold-500: #7d5f0e;  /* 5.7:1 on the page ground */
-  --color-gold-300: #634a0b;  /* 8.2:1 — hover and emphasis */
+  --color-gold-700: #d8a47c;  /* decorative only */
+  --color-gold-500: #8f4a17;  /* 6.6:1 on the page ground */
+  --color-gold-300: #6e3810;  /* 9.0:1 — hover and emphasis */
 
   --color-bone: #14120e;      /* 18:1 */
   --color-bone-dim: #585349;  /* 7.4:1 */
@@ -99,16 +105,17 @@
   --color-blood-bright: #7f0a11;
   --color-blood-soft: #a50f1859;
 
-  --color-rule: #c9c3ae99;
-  --color-rule-strong: #b3aa8e;
-  --color-hairline: #ded8c6;
-  --color-veil: #fbfaf7e6;
-  --color-overlay: #fbfaf7fa;
-  --color-scrim: #fbfaf7;
-  --color-scrim-mid: #fbfaf799;
+  --color-rule: #d2b9a299;
+  --color-rule-strong: #c09a7c;
+  --color-hairline: #e6d6c6;
+  --color-veil: #f0ffffe6;   /* azure, like the cards */
+  --color-overlay: #fffffffa;
+  --color-scrim: #ffffff;
+  --color-scrim-mid: #ffffff99;
   --color-danger-border: #a50f1859;
 
-  --color-field: #ffffff;
+  --color-field: #f0ffff;
+  --color-azure: #f0ffff;
 
   /* Elevation is the light theme's whole separation strategy. */
   --shadow-card: 0 1px 2px rgb(20 18 14 / 0.04), 0 4px 12px rgb(20 18 14 / 0.06);
@@ -223,9 +230,9 @@
     --color-ink-800: #121212;
     --color-bone: #faf8f3;
     --color-bone-dim: #d9d5cc;
-    --color-gold-700: #9a7b1f;
-    --color-gold-500: #d4af37;
-    --color-gold-300: #e8ce7a;
+    --color-gold-700: #b06c3a;
+    --color-gold-500: #e19c65;
+    --color-gold-300: #efbd93;
     --color-blood: #b3121b;
     --color-blood-hover: #cf1420;
     --color-rule-strong: #faf8f366;
@@ -239,6 +246,25 @@
   .on-photo h1,
   .on-photo p {
     text-shadow: 0 1px 12px rgb(0 0 0 / 0.45);
+  }
+
+  /* Content on a logo-copper band. The fill is the same in both themes, so
+     everything on it is dark ink: copper accents turn black, text stays dark
+     enough to pass AA (#0a0a0a is 8.6:1, #3d2412 is 6.3:1), and buttons
+     invert to black with copper labels. */
+  .on-brand {
+    background-color: var(--color-brand);
+    color: var(--color-bone);
+    color-scheme: light;
+    --color-ink-900: #e19c65;
+    --color-bone: #0a0a0a;
+    --color-bone-dim: #3d2412;
+    --color-gold-700: #0a0a0abf;
+    --color-gold-500: #0a0a0a;
+    --color-gold-300: #2b1a0d;
+    --color-rule: #0a0a0a40;
+    --color-rule-strong: #0a0a0a80;
+    --color-ink-600: #0a0a0a33;
   }
 
   .field {

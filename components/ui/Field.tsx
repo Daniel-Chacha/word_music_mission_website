@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 export function Field({
   label,
   name,
@@ -11,7 +13,8 @@ export function Field({
   required?: boolean
   rows?: number
 }) {
-  const id = `field-${name}`
+  // Unique per instance: several forms on one page share field names.
+  const id = `field-${name}-${useId()}`
   const shared =
     'field mt-2 w-full border border-ink-600 px-4 py-3 text-bone placeholder:text-bone-dim focus:border-gold-500 focus:outline-none'
 

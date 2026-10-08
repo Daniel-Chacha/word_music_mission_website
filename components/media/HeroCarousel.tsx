@@ -11,6 +11,9 @@ const AUTOPLAY_MS = 7000
 // Longest of the move animations in HeroCarousel.module.css, plus headroom.
 const MOVE_MS = 900
 const THUMB_GAP_PX = 12
+// Photos narrower than this are stretched to pixelation filling a
+// laptop-width hero, so from lg up they are shown in greyscale.
+const MIN_FULL_BLEED_WIDTH = 1280
 
 type Direction = 'next' | 'prev'
 
@@ -135,21 +138,27 @@ export function HeroCarousel({
       ref={rootRef}
       aria-roledescription="carousel"
       aria-label={label}
-      className="on-photo relative flex min-h-[max(560px,calc(100svh-var(--header-h)-1px))] flex-col justify-end overflow-hidden bg-ink-800"
+      className="on-photo relative flex min-h-[max(560px,calc(100svh-var(--header-h)))] flex-col justify-end overflow-hidden bg-ink-800"
     >
       <div className="absolute inset-0 isolate">
-        {slides.map((photo, index) => (
-          <div key={index} className={`absolute left-0 top-0 h-full w-full ${slideClass(index)}`}>
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="100vw"
-              preload={index === 0}
-              className="object-cover"
-            />
-          </div>
-        ))}
+        {slides.map((photo, index) => {
+          const small = photo.width < MIN_FULL_BLEED_WIDTH
+          return (
+            <div key={index} className={`absolute left-0 top-0 h-full w-full ${slideClass(index)}`}>
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="100vw"
+                preload={index === 0}
+                // A small photo is fine below lg, where it is not enlarged much.
+                // From lg up it is stretched enough to look blocky, so it goes
+                // greyscale, which reads as deliberate and hides the noise.
+                className={`object-cover ${small ? 'lg:grayscale' : ''}`}
+              />
+            </div>
+          )
+        })}
       </div>
       {/* A light shade behind the copy only. Top and right stay untouched so
           the photo reads as it was taken. */}
@@ -252,7 +261,7 @@ export function HeroCarousel({
           key={current}
           aria-hidden="true"
           style={{ '--autoplay-ms': `${AUTOPLAY_MS}ms` } as React.CSSProperties}
-          className={`absolute inset-x-0 top-0 z-10 h-[3px] bg-gold-500 ${styles.progress}`}
+          className={`absolute inset-x-0 top-0 z-10 h-[3px] bg-white ${styles.progress}`}
         />
       )}
     </section>

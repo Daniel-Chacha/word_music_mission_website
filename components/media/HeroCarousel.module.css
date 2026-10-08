@@ -123,9 +123,10 @@
   }
 }
 
-/* Time left until the next autoplay advance. */
+/* Time left until the next autoplay advance. Fills from the right edge
+   towards the left. */
 .progress {
-  transform-origin: left;
+  transform-origin: right;
   animation: progress var(--autoplay-ms) linear forwards;
 }
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { formatKes, formatDate } from '@/lib/format'
+import { formatKes, formatDate, formatDateTimeLocal } from '@/lib/format'
 
 describe('formatKes', () => {
   it('formats whole shillings from integer cents', () => {
@@ -22,5 +22,17 @@ describe('formatKes', () => {
 describe('formatDate', () => {
   it('renders a readable Kenyan-style date', () => {
     expect(formatDate('2026-03-14')).toBe('14 March 2026')
+  })
+})
+
+describe('formatDateTimeLocal', () => {
+  it('formats a datetime-local value as written, with no timezone shift', () => {
+    expect(formatDateTimeLocal('2026-10-20T10:30')).toBe('Tuesday 20 October 2026, 10:30')
+    expect(formatDateTimeLocal('2026-01-05T08:05')).toBe('Monday 5 January 2026, 08:05')
+  })
+
+  it('passes anything else through unchanged', () => {
+    expect(formatDateTimeLocal('')).toBe('')
+    expect(formatDateTimeLocal('next week')).toBe('next week')
   })
 })

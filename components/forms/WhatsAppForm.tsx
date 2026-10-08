@@ -2,6 +2,7 @@
 
 import { site } from '@/content/site'
 import { whatsappLink, buildEnquiry } from '@/lib/whatsapp'
+import { formatDateTimeLocal } from '@/lib/format'
 import { Field } from '@/components/ui/Field'
 
 export interface FormField {
@@ -35,7 +36,8 @@ export function WhatsAppForm({
 
     const entries: Record<string, string> = {}
     for (const field of fields) {
-      entries[field.label] = String(data.get(field.name) ?? '')
+      const value = String(data.get(field.name) ?? '')
+      entries[field.label] = field.type === 'datetime-local' ? formatDateTimeLocal(value) : value
     }
 
     const message = `${preamble}\n\n${buildEnquiry(entries)}`
@@ -47,9 +49,12 @@ export function WhatsAppForm({
       <h3 className="text-xl font-bold">{heading}</h3>
       <p className="mt-3 text-sm text-bone-dim">{intro}</p>
 
-      <div className="mt-8 flex flex-col gap-6">
+      {/* Two columns from md up; multi-line answers span both. */}
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
         {fields.map((field) => (
-          <Field key={field.name} {...field} />
+          <div key={field.name} className={field.rows ? 'md:col-span-2' : ''}>
+            <Field {...field} />
+          </div>
         ))}
       </div>
 

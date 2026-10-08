@@ -16,16 +16,20 @@ export const site: SiteConfig = {
   contact: {
     whatsapp: '+254700000000', // TODO: real WhatsApp number
     phone: '+254700000000', // TODO: real phone number
-    email: 'hello@wordmissionteam.org', // TODO: real email
+    email: 'wordmusc@gmail.com ', 
     location: 'Nairobi, Kenya', // TODO: confirm base location
   },
 
   socials: {
-    youtube: 'https://youtube.com/@wordmissiontv', // TODO: real channel
-    facebook: 'https://facebook.com/wordmissionteam', // TODO
-    instagram: 'https://instagram.com/wordmissionteam', // TODO
-    tiktok: 'https://tiktok.com/@wordmissionteam', // TODO
-    x: 'https://x.com/wordmissionteam', // TODO
+    youtube: 'https://youtube.com/@wordmusic_ke?si=MO5FbS2shPBMu_k1', 
+    facebook: 'https://www.facebook.com/share/1cmzSbYDZm/',  
+    instagram: 'https://www.instagram.com/word_mission_team?stkn=MWF2bTMzOTE5Y2M0Yg==',  
+    // tiktok: 'https://tiktok.com/@wordmissionteam',  
+    // x: 'https://x.com/wordmissionteam',  
+  },
+
+  socialNames: {
+    facebook: 'Word Mission Team',
   },
 
   giving: {

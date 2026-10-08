@@ -18,7 +18,7 @@ export const videos: Video[] = [
   {
     slug: 'student-testimony',
     youtubeId: 'BBBBBBBBBBB',
-    title: 'A Student Tells Her Story',
+    title: 'School Mission Highlights',
     description: 'TODO: Describe this testimony.',
     category: 'testimony',
     date: '2026-07-30',
@@ -26,7 +26,7 @@ export const videos: Video[] = [
   {
     slug: 'worship-session',
     youtubeId: 'CCCCCCCCCCC',
-    title: 'Worship Session',
+    title: 'School Mission Highlights',
     description: 'TODO: Describe this worship session.',
     category: 'worship',
     date: '2026-07-12',

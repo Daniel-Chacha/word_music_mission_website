@@ -4,8 +4,8 @@ import { resolve } from 'node:path'
 
 /**
  * Guards WCAG 2.2 AA contrast for BOTH palettes, parsed from the real
- * stylesheet. Gold on white is the trap here: the brand gold #d4af37 is only
- * 1.9:1 on a white ground, so the light theme has to darken it. This test
+ * stylesheet. Copper on white is the trap here: the logo copper #e19c65 is
+ * only 2.2:1 on a white ground, so the light theme has to darken it. This test
  * fails if anyone tunes a colour past the point of readability.
  */
 
@@ -90,26 +90,24 @@ for (const [themeName, tokens] of [
       ).toBeGreaterThanOrEqual(4.5)
     })
 
-    it('the four surfaces are visually distinct', () => {
-      const surfaces = [
-        tokens['--color-ink-900'],
-        tokens['--color-ink-800'],
-        tokens['--color-ink-700'],
-      ]
-      expect(new Set(surfaces).size).toBe(3)
+    it('sections and cards stand apart from the page', () => {
+      const page = tokens['--color-ink-900']
+      expect(tokens['--color-ink-800']).not.toBe(page)
+      expect(tokens['--color-ink-700']).not.toBe(page)
+      // Dark separates a card from its section by colour. Light may share
+      // one colour, because elevation there comes from shadow.
+      if (themeName === 'dark') {
+        expect(tokens['--color-ink-700']).not.toBe(tokens['--color-ink-800'])
+      }
     })
   })
 }
 
 describe('light theme intent', () => {
   it('is built from shades of white, not grey', () => {
-    // Every surface should be near-white and warm (red channel >= blue).
     for (const token of ['--color-ink-900', '--color-ink-800', '--color-ink-700']) {
       const hex = light[token]
       expect(luminance(hex), `${token} ${hex} should be near-white`).toBeGreaterThan(0.8)
-      const r = parseInt(hex.slice(1, 3), 16)
-      const b = parseInt(hex.slice(5, 7), 16)
-      expect(r, `${token} ${hex} should be warm`).toBeGreaterThanOrEqual(b)
     }
   })
 

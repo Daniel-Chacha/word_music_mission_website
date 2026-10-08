@@ -1,31 +1,39 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { site } from '@/content/site'
 import { Container } from './Container'
 import { GoldRule } from '@/components/ui/GoldRule'
+import { SocialIcon } from '@/components/ui/SocialIcon'
+import { socialProfiles } from '@/lib/socials'
+import logo from '@/public/images/wm_logo.jpeg'
 
-const SOCIAL_LABELS: Record<string, string> = {
-  youtube: 'YouTube',
-  facebook: 'Facebook',
-  instagram: 'Instagram',
-  tiktok: 'TikTok',
-  x: 'X',
-}
+const LINK_CLASS =
+  'inline-flex items-center gap-3 text-sm text-bone-dim transition-colors hover:text-gold-300'
 
 export function Footer() {
-  const socials = Object.entries(site.socials).filter(([, url]) => Boolean(url))
+  const socials = socialProfiles(site.socials, site.socialNames)
+  const email = site.contact.email.trim()
 
   return (
-    <footer className="border-t border-hairline bg-ink-800">
+    <footer className="on-brand">
       <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-[2fr_1fr_1fr]">
           <div>
-            <p className="text-lg font-extrabold uppercase tracking-[0.08em]">{site.name}</p>
+            <div className="flex items-center gap-4">
+              <Image src={logo} alt="" sizes="96px" className="h-14 w-auto rounded-sm" />
+              <p className="text-lg font-extrabold uppercase tracking-[0.08em]">{site.name}</p>
+            </div>
             <p className="mt-4 max-w-sm text-sm text-bone-dim">{site.missionStatement}</p>
           </div>
 
           <nav aria-label="Footer">
             <p className="eyebrow">Explore</p>
-            <ul className="mt-4 flex flex-col gap-2">
+            {/* Two columns, filled top to bottom: the first half of the links,
+                then the rest. */}
+            <ul
+              className="mt-4 grid grid-flow-col gap-x-12 gap-y-2"
+              style={{ gridTemplateRows: `repeat(${Math.ceil(site.nav.length / 2)}, auto)` }}
+            >
               {site.nav.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="text-sm text-bone-dim hover:text-gold-300">
@@ -39,24 +47,25 @@ export function Footer() {
           <div>
             <p className="eyebrow">Connect</p>
             <ul className="mt-4 flex flex-col gap-2">
-              {socials.map(([key, url]) => (
+              {socials.map(({ key, label, url, handle }) => (
                 <li key={key}>
                   <a
-                    href={url as string}
+                    href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-bone-dim hover:text-gold-300"
+                    // The visible handle alone does not say which network it is.
+                    aria-label={handle ? `${label}: ${handle}` : label}
+                    className={LINK_CLASS}
                   >
-                    {SOCIAL_LABELS[key] ?? key}
+                    <SocialIcon name={key} className="size-5 shrink-0" />
+                    <span>{handle ?? label}</span>
                   </a>
                 </li>
               ))}
               <li>
-                <a
-                  href={`mailto:${site.contact.email}`}
-                  className="text-sm text-bone-dim hover:text-gold-300"
-                >
-                  {site.contact.email}
+                <a href={`mailto:${email}`} className={LINK_CLASS}>
+                  <SocialIcon name="email" className="size-5 shrink-0" />
+                  <span>{email}</span>
                 </a>
               </li>
             </ul>

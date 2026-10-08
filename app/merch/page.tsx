@@ -5,6 +5,7 @@ import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { ProductCard } from '@/components/commerce/ProductCard'
+import pixels from '@/components/ui/pixels.module.css'
 
 export const metadata: Metadata = {
   title: 'Merchandise & Books',
@@ -17,7 +18,7 @@ const ORDER: ProductCategory[] = ['apparel', 'accessory', 'book']
 export default function MerchPage() {
   return (
     <>
-      <Section>
+      <Section className={`border-y border-black/10 ${pixels.pixels}`}>
         <Container>
           <p className="eyebrow">Merchandise &amp; Books</p>
           <h1 className="mt-6 max-w-4xl text-[clamp(2.5rem,6vw,4.5rem)] font-black leading-[0.98] tracking-[-0.02em]">

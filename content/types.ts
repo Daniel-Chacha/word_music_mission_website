@@ -47,6 +47,9 @@ export interface SiteConfig {
     location: string
   }
   socials: SocialLinks
+  /** Display name for a profile whose link carries no @handle (e.g. a
+      Facebook share link). Others are read from the link itself. */
+  socialNames?: Partial<Record<keyof SocialLinks, string>>
   giving: {
     message: string
     mpesa: MpesaDetails

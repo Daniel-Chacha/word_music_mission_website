@@ -25,7 +25,7 @@ export default function OpengraphImage() {
             display: 'flex',
             fontSize: 24,
             letterSpacing: 8,
-            color: '#d4af37',
+            color: '#e19c65',
             textTransform: 'uppercase',
           }}
         >
@@ -36,7 +36,7 @@ export default function OpengraphImage() {
             display: 'flex',
             width: 160,
             height: 3,
-            backgroundColor: '#d4af37',
+            backgroundColor: '#e19c65',
             marginTop: 32,
           }}
         />

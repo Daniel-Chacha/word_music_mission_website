@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { ministry } from '@/content/ministry'
 import { site } from '@/content/site'
 import { Container } from '@/components/layout/Container'
@@ -8,6 +9,8 @@ import { GoldRule } from '@/components/ui/GoldRule'
 import { StatCounter } from '@/components/content/StatCounter'
 import { TeamCard } from '@/components/content/TeamCard'
 import { Button } from '@/components/ui/Button'
+import pixels from '@/components/ui/pixels.module.css'
+import seedling from '@/public/images/seedling.jpg'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -17,7 +20,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Section>
+      <Section className={pixels.pixels}>
         <Container>
           <p className="eyebrow">About Word Mission Team</p>
           <h1 className="mt-6 max-w-4xl text-[clamp(2.5rem,6vw,4.5rem)] font-black leading-[0.98] tracking-[-0.02em]">
@@ -56,8 +59,25 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      <Section>
-        <Container>
+      <Section className="on-photo grain relative overflow-hidden bg-scrim">
+        {/* Full-bleed behind the text on small screens; on large screens the
+            photo takes the right side so the seedling sits beside the story,
+            fading in from the black ground on its left edge. */}
+        <div className="absolute inset-0 lg:left-auto lg:w-[55%]">
+          <Image
+            src={seedling}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 55vw, 100vw"
+            placeholder="blur"
+            className="object-cover object-bottom"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-r from-scrim via-scrim-mid to-scrim-mid lg:via-transparent lg:via-40% lg:to-transparent"
+          />
+        </div>
+        <Container className="relative">
           <SectionHeading eyebrow="Our Story" number="04" title="How this began" />
           <div className="mt-10 max-w-3xl space-y-6">
             {ministry.story.map((paragraph, i) => (

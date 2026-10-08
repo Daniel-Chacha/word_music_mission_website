@@ -23,3 +23,23 @@ export function formatDate(iso: string): string {
     timeZone: 'UTC',
   })
 }
+
+/**
+ * Formats an <input type="datetime-local"> value ("2026-10-20T10:30") as
+ * "Tuesday 20 October 2026, 10:30". The clock time is kept exactly as typed:
+ * the value has no timezone, so it is read as UTC and printed as UTC.
+ * Anything that is not such a value is returned unchanged.
+ */
+export function formatDateTimeLocal(value: string): string {
+  const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})$/.exec(value)
+  if (!match) return value
+  const [, date, time] = match
+  const day = new Date(`${date}T00:00:00Z`).toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+  return `${day.replace(',', '')}, ${time}`
+}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { devotionals, bibleStudies, sermons, teachingNotes } from '@/content/word'
 import { latest, todaysDevotional, currentMemoryVerse } from '@/lib/content'
@@ -8,6 +9,8 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Button } from '@/components/ui/Button'
 import { ScriptureBlock } from '@/components/content/ScriptureBlock'
 import { DevotionalCard } from '@/components/content/DevotionalCard'
+import pixels from '@/components/ui/pixels.module.css'
+import openBible from '@/public/images/open-bible.jpg'
 
 export const metadata: Metadata = {
   title: 'The Word',
@@ -21,8 +24,23 @@ export default function WordPage() {
 
   return (
     <>
-      <Section>
-        <Container>
+      <Section className="on-photo grain relative overflow-hidden bg-ink-800">
+        <Image
+          src={openBible}
+          alt=""
+          fill
+          preload
+          sizes="100vw"
+          placeholder="blur"
+          className="object-cover"
+        />
+        {/* Darker on the left, where the text sits, so the photo stays visible
+            on the right without costing legibility. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-r from-scrim via-scrim-mid via-70% to-scrim-mid lg:to-transparent"
+        />
+        <Container className="relative">
           <p className="eyebrow">The Word of God</p>
           <h1 className="mt-6 max-w-4xl text-[clamp(2.5rem,6vw,4.5rem)] font-black leading-[0.98] tracking-[-0.02em]">
             Feed on the Word
@@ -48,7 +66,7 @@ export default function WordPage() {
         </Container>
       </Section>
 
-      <Section>
+      <Section className={`border-y border-black/10 ${pixels.pixels}`}>
         <Container>
           <SectionHeading eyebrow="Memory Verse" number="02" title="Hide it in your heart" />
           <ScriptureBlock
