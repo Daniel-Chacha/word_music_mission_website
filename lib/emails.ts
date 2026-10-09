@@ -28,8 +28,14 @@ export function isValidEmail(value: string): boolean {
  */
 const NAME_PATTERN = /^[\p{L}\p{M} .'-]{1,80}$/u
 
+/**
+ * A dot directly followed by a letter ("evil.com", "www.x") is what mail
+ * clients auto-link as a domain. Initials ("J. R. Tolkien") keep their space.
+ */
+const DOMAIN_LIKE = /\.[\p{L}\p{M}]/u
+
 export function isValidName(value: string): boolean {
-  return NAME_PATTERN.test(value)
+  return NAME_PATTERN.test(value) && !DOMAIN_LIKE.test(value)
 }
 
 export function escapeHtml(value: string): string {

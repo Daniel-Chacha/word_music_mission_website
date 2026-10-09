@@ -58,6 +58,12 @@ describe('isValidName', () => {
   it('accepts real names, including accented and hyphenated ones', () => {
     expect(isValidName('Amina Wanjiru')).toBe(true)
     expect(isValidName("Chép O'Neil-Ndūng'u")).toBe(true)
+    expect(isValidName('J. R. Mwangi')).toBe(true)
+  })
+
+  it('rejects bare domains that mail clients would turn into links', () => {
+    expect(isValidName('Visit www.evil.com')).toBe(false)
+    expect(isValidName('evil.co.ke')).toBe(false)
   })
 
   it('rejects links, digits and anything message-like', () => {
