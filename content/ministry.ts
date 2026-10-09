@@ -23,12 +23,12 @@ export const ministry: Ministry = {
     {
       title: 'Reaching them where they are',
       description:
-        'Students are in school. So we go to school — into assemblies, classrooms, dormitories and fields, not waiting for them to find a church.',
+        'Students are in school. So we go to school , into assemblies, classrooms, and fields, not waiting for them to find a church.',
     },
     {
       title: 'Discipleship, not events',
       description:
-        'A crusade that ends when we drive away is not ministry. We follow up, we mentor, and we stay reachable.',
+        'A crusade that ends when we drive away is not ministry. We follow up and stay reachable by the students, teachers and school administration.',
     },
     {
       title: 'Integrity in everything',
@@ -50,7 +50,7 @@ export const ministry: Ministry = {
     { label: 'Schools visited', value: 0, note: 'TODO: real figure' },
     { label: 'Students reached', value: 0, note: 'TODO: real figure' },
     { label: 'Decisions for Christ', value: 0, note: 'TODO: real figure' },
-    { label: 'Bibles distributed', value: 0, note: 'TODO: real figure' },
+    // { label: 'Bibles distributed', value: 0, note: 'TODO: real figure' },
   ],
 
   // TODO: Replace with the real team. Names below are placeholders.
