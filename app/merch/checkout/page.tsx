@@ -1,6 +1,4 @@
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
-import { isCommerceEnabled } from '@/lib/orders'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { CartSummary } from '@/components/commerce/CartSummary'
@@ -9,10 +7,6 @@ import { CheckoutForm } from './CheckoutForm'
 export const metadata: Metadata = { title: 'Checkout' }
 
 export default function CheckoutPage() {
-  // With no credentials there is no checkout to show — send them back to the
-  // shop, where every product offers WhatsApp ordering.
-  if (!isCommerceEnabled()) redirect('/merch')
-
   return (
     <Section>
       <Container className="grid gap-14 lg:grid-cols-2">

@@ -11,11 +11,3 @@ export function normalisePhone(input: string): string {
 export function whatsappLink(phone: string, message: string): string {
   return `https://wa.me/${normalisePhone(phone)}?text=${encodeURIComponent(message)}`
 }
-
-/** Renders form fields as labelled lines, skipping blanks. */
-export function buildEnquiry(fields: Record<string, string>): string {
-  return Object.entries(fields)
-    .filter(([, value]) => value.trim() !== '')
-    .map(([label, value]) => `${label}: ${value.trim()}`)
-    .join('\n')
-}

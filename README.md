@@ -137,66 +137,37 @@ both restrict how much text may be quoted on a public website.
 
 ---
 
-## Commerce setup (optional)
+## Email setup (shop orders and contact forms)
 
-**The site runs fine without any of this.** With no payment credentials
-configured, the shop still shows every product and the buy button becomes
-"Order on WhatsApp". You can launch first and switch on online payment later.
+The site keeps no database. Shop orders and contact-page forms are sent to the
+team by email, from a Gmail account, and a member of the team follows up.
 
-Online checkout needs **both** Paystack and Firebase. If either is missing the
-site stays in WhatsApp-ordering mode.
+1. Pick the Gmail account the site should send from and turn on
+   **2-Step Verification** for it.
+2. Create an **app password** at
+   [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords).
+3. Copy `.env.example` to `.env.local` and fill in `GMAIL_USER` (the address)
+   and `GMAIL_APP_PASSWORD` (the 16-character app password).
+4. Optionally set `MAIL_TO` to the inbox that should receive orders and
+   messages. It defaults to the contact email in `content/site.ts`.
 
-Copy `.env.example` to `.env.local` and fill it in.
+Without these the site still runs, but submitting an order or a contact form
+shows an "email us instead" message.
 
-### Paystack (payments — M-Pesa and card)
-
-1. Create an account at [paystack.com](https://paystack.com) and complete
-   business verification.
-2. Settings → API Keys & Webhooks → copy the **secret key** into
-   `PAYSTACK_SECRET_KEY`.
-3. On the same page, set the webhook URL to:
-   `https://your-domain.com/api/webhooks/paystack`
-
-The webhook is what actually confirms a payment. Without it, orders stay
-`pending` even after a customer pays.
-
-Test with card `4084 0840 8408 4081`, any future expiry, any CVV.
-
-### Firebase (order records)
-
-1. Create a project at [console.firebase.google.com](https://console.firebase.google.com)
-   and enable **Firestore**.
-2. Project settings → Service accounts → **Generate new private key**.
-3. From the downloaded JSON, copy `project_id`, `client_email` and
-   `private_key` into `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL` and
-   `FIREBASE_PRIVATE_KEY`.
-
-`FIREBASE_PRIVATE_KEY` must stay wrapped in double quotes with its `\n`
-sequences intact.
-
-### Admin order list
-
-```bash
-ADMIN_PASSWORD=<choose a strong password>
-ADMIN_COOKIE_SECRET=$(openssl rand -hex 32)
-```
-
-Orders are then visible at `/admin/orders`.
-
-### How a purchase flows
+### How an order flows
 
 ```
 cart (browser)
-  → POST /api/checkout
+  → checkout form: name, email, phone, delivery location
+  → POST /api/order
   → server re-prices every line from content/merch.ts   ← client prices ignored
-  → order written to Firestore as "pending"
-  → Paystack hosted checkout (M-Pesa or card)
-  → webhook confirms payment  ← the source of truth
-  → receipt at /merch/order/<reference>
+  → email to the team (reply goes straight to the customer)
+  → confirmation email to the customer
+  → /merch/order-received
+  → the team contacts the customer to arrange delivery and payment
 ```
 
-Prices are always recomputed on the server. A customer who edits the price in
-their browser is charged the real amount.
+Gmail allows roughly 500 sent emails a day per account, which is plenty here.
 
 ---
 
@@ -205,10 +176,8 @@ their browser is charged the real amount.
 1. Push this repository to GitHub.
 2. Import it at [vercel.com/new](https://vercel.com/new) — the Next.js settings
    are detected automatically.
-3. Add your environment variables under Settings → Environment Variables
-   (only needed for online checkout).
-4. Set `NEXT_PUBLIC_SITE_URL` to your real domain, and update `url` in
-   `content/site.ts` to match.
+3. Add the email environment variables under Settings → Environment Variables.
+4. Update `url` in `content/site.ts` to your real domain.
 
 Every push to `main` deploys. Every pull request gets a preview URL.
 
@@ -218,10 +187,9 @@ Every push to `main` deploys. Every pull request gets a preview URL.
 
 ```
 content/      All editable content. Start here.
-lib/          Pure logic: pricing, cart, formatting, WhatsApp links, integrations
+lib/          Pure logic: pricing, cart, formatting, WhatsApp links, email
 components/   layout/ ui/ media/ content/ forms/ commerce/
 app/          Routes (Next.js App Router)
-proxy.ts      Gates /admin  (Next 16 renamed "middleware" to "proxy")
 tests/        Unit tests for lib/ and content integrity
 docs/superpowers/   Design spec and implementation plans
 ```

@@ -1,7 +1,7 @@
 'use client'
 
 import { useId, useRef, useState } from 'react'
-import { WhatsAppForm, type FormField } from './WhatsAppForm'
+import { ContactForm, type FormField } from './ContactForm'
 
 export interface TabbedForm {
   /** Short label for the tab itself. */
@@ -85,7 +85,7 @@ export function FormTabs({ forms }: { forms: TabbedForm[] }) {
           hidden={index !== active}
           className="mt-8"
         >
-          <WhatsAppForm {...form} />
+          <ContactForm {...form} />
         </div>
       ))}
     </div>

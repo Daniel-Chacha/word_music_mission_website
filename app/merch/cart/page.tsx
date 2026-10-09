@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { isCommerceEnabled } from '@/lib/orders'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { Button } from '@/components/ui/Button'
@@ -8,8 +7,6 @@ import { CartSummary } from '@/components/commerce/CartSummary'
 export const metadata: Metadata = { title: 'Your Cart' }
 
 export default function CartPage() {
-  const commerceEnabled = isCommerceEnabled()
-
   return (
     <Section>
       <Container className="max-w-3xl">
@@ -21,11 +18,9 @@ export default function CartPage() {
           <CartSummary />
         </div>
         <div className="mt-10 flex flex-wrap gap-4">
-          {commerceEnabled && (
-            <Button href="/merch/checkout" variant="gold" size="lg">
-              Checkout
-            </Button>
-          )}
+          <Button href="/merch/checkout" variant="gold" size="lg">
+            Checkout
+          </Button>
           <Button href="/merch" variant="ghost" size="lg">
             Keep shopping
           </Button>

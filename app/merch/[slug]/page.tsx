@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { products } from '@/content/merch'
 import { bySlug } from '@/lib/content'
-import { isCommerceEnabled } from '@/lib/orders'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { Button } from '@/components/ui/Button'
@@ -48,7 +47,7 @@ export default async function ProductPage(props: PageProps<'/merch/[slug]'>) {
           </h1>
           <p className="mt-6 text-bone-dim">{product.description}</p>
 
-          <AddToCart product={product} commerceEnabled={isCommerceEnabled()} />
+          <AddToCart product={product} />
 
           <ul className="mt-12 border-t border-rule pt-6">
             {product.details.map((detail) => (

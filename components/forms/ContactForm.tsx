@@ -1,7 +1,6 @@
 'use client'
 
-import { site } from '@/content/site'
-import { whatsappLink, buildEnquiry } from '@/lib/whatsapp'
+import { useState } from 'react'
 import { formatDateTimeLocal } from '@/lib/format'
 import { Field } from '@/components/ui/Field'
 
@@ -13,11 +12,10 @@ export interface FormField {
   rows?: number
 }
 
-/**
- * Builds a pre-filled wa.me link from the form fields and opens it.
- * Nothing is transmitted to this site and nothing is stored.
- */
-export function WhatsAppForm({
+type Status = { kind: 'idle' } | { kind: 'sending' } | { kind: 'sent' } | { kind: 'error'; message: string }
+
+/** Emails the filled-in fields to the team. Nothing is stored on the site. */
+export function ContactForm({
   heading,
   intro,
   fields,
@@ -30,9 +28,12 @@ export function WhatsAppForm({
   submitLabel: string
   preamble: string
 }) {
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [status, setStatus] = useState<Status>({ kind: 'idle' })
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const data = new FormData(form)
 
     const entries: Record<string, string> = {}
     for (const field of fields) {
@@ -40,8 +41,29 @@ export function WhatsAppForm({
       entries[field.label] = field.type === 'datetime-local' ? formatDateTimeLocal(value) : value
     }
 
-    const message = `${preamble}\n\n${buildEnquiry(entries)}`
-    window.open(whatsappLink(site.contact.whatsapp, message), '_blank', 'noopener')
+    setStatus({ kind: 'sending' })
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          preamble,
+          fields: entries,
+          website: String(data.get('website') ?? ''),
+        }),
+      })
+      const payload = await response.json()
+      if (!response.ok) throw new Error(payload.error ?? 'We could not send your message.')
+
+      form.reset()
+      setStatus({ kind: 'sent' })
+    } catch (cause) {
+      setStatus({
+        kind: 'error',
+        message:
+          cause instanceof Error ? cause.message : 'Something went wrong. Please try again.',
+      })
+    }
   }
 
   return (
@@ -58,16 +80,32 @@ export function WhatsAppForm({
         ))}
       </div>
 
+      {/* Honeypot for spam bots: hidden from people and assistive tech. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label>
+          Leave this empty
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+
       <button
         type="submit"
-        className="mt-8 inline-flex items-center justify-center bg-gold-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-ink-900 transition-colors hover:bg-gold-300"
+        disabled={status.kind === 'sending'}
+        className="mt-8 inline-flex items-center justify-center bg-gold-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-ink-900 transition-colors hover:bg-gold-300 disabled:opacity-50"
       >
-        {submitLabel}
+        {status.kind === 'sending' ? 'Sending…' : submitLabel}
       </button>
-      <p className="mt-4 text-xs text-bone-dim">
-        This opens WhatsApp with your message ready to send. Nothing is stored on this
-        website.
-      </p>
+
+      <div aria-live="polite" className="mt-4 text-sm">
+        {status.kind === 'sent' && (
+          <p className="text-gold-300">Thank you — your message has been sent. We will be in touch.</p>
+        )}
+        {status.kind === 'error' && (
+          <p role="alert" className="text-blood-bright">
+            {status.message}
+          </p>
+        )}
+      </div>
     </form>
   )
 }

@@ -8,7 +8,7 @@ import { useCart } from '@/lib/cart-store'
 
 /**
  * Display only. The authoritative total is recomputed server-side in
- * /api/checkout from the catalog — never from anything shown here.
+ * /api/order from the catalog — never from anything shown here.
  */
 export function CartSummary({ editable = true }: { editable?: boolean }) {
   const { lines, setQuantity, remove, ready } = useCart()

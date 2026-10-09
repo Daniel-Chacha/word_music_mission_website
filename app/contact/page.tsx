@@ -63,7 +63,7 @@ const FORMS: TabbedForm[] = [
   {
     tab: 'Mission updates',
     heading: 'Get mission updates',
-    intro: 'We will send you updates on missions and prayer points, on WhatsApp or by email.',
+    intro: 'We will send you updates on missions and prayer points by email.',
     preamble: 'UPDATES SIGN-UP',
     submitLabel: 'Sign me up',
     fields: [
@@ -142,7 +142,7 @@ export default function ContactPage() {
             eyebrow="How can we help?"
             number="01"
             title="Send us a message"
-            description="Pick what you need below. Each form opens WhatsApp with your message ready to send."
+            description="Pick what you need below. Each form sends your message straight to the team by email."
           />
 
           <div className="mt-14">

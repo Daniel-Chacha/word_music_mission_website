@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { normalisePhone, whatsappLink, buildEnquiry } from '@/lib/whatsapp'
+import { normalisePhone, whatsappLink } from '@/lib/whatsapp'
 
 describe('normalisePhone', () => {
   it('converts a local 07 number to international', () => {
@@ -33,14 +33,6 @@ describe('whatsappLink', () => {
   it('encodes newlines', () => {
     expect(whatsappLink('0712345678', 'a\nb')).toBe(
       'https://wa.me/254712345678?text=a%0Ab',
-    )
-  })
-})
-
-describe('buildEnquiry', () => {
-  it('renders labelled lines and skips empty values', () => {
-    expect(buildEnquiry({ Name: 'Amina', School: '', Request: 'Pray for me' })).toBe(
-      'Name: Amina\nRequest: Pray for me',
     )
   })
 })
