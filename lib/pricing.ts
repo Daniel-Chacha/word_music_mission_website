@@ -6,6 +6,9 @@ export const SHIPPING_CENTS = 30000
 
 const MAX_QUANTITY_PER_LINE = 20
 
+/** More distinct lines than the whole catalogue could ever need. */
+export const MAX_LINES = 50
+
 function clampQuantity(quantity: number): number {
   if (!Number.isFinite(quantity)) return 1
   return Math.min(Math.max(Math.floor(quantity), 1), MAX_QUANTITY_PER_LINE)
@@ -22,7 +25,18 @@ export function priceOrder(lines: CartLine[]): PricedOrder {
   const priced: PricedLine[] = []
   const rejected: CartLine[] = []
 
-  for (const line of lines) {
+  // Merge repeats of the same item first, so the per-line cap cannot be
+  // dodged by sending one item as many separate lines.
+  const merged = new Map<string, CartLine>()
+  for (const line of lines.slice(0, MAX_LINES)) {
+    const key = `${line.slug}\u0000${line.variantId}`
+    const quantity = clampQuantity(line.quantity)
+    const existing = merged.get(key)
+    if (existing) existing.quantity += quantity
+    else merged.set(key, { slug: line.slug, variantId: line.variantId, quantity })
+  }
+
+  for (const line of merged.values()) {
     const product = products.find((p) => p.slug === line.slug)
     const variant = product?.variants.find((v) => v.id === line.variantId)
 

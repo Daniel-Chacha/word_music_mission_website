@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { site } from '@/content/site'
 import type { CartLine } from '@/content/types'
-import { priceOrder } from '@/lib/pricing'
+import { MAX_LINES, priceOrder } from '@/lib/pricing'
 import {
   customerOrderEmail,
   isValidEmail,
@@ -67,6 +67,9 @@ export async function POST(request: Request) {
 
   if (!Array.isArray(items) || items.length === 0) {
     return NextResponse.json({ error: 'Your cart is empty.' }, { status: 400 })
+  }
+  if (items.length > MAX_LINES) {
+    return NextResponse.json({ error: 'Your cart has too many items.' }, { status: 400 })
   }
 
   const customer = parseCustomer(rawCustomer)

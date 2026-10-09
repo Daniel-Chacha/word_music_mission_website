@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { priceOrder, SHIPPING_CENTS } from '@/lib/pricing'
+import { MAX_LINES, priceOrder, SHIPPING_CENTS } from '@/lib/pricing'
 import { products } from '@/content/merch'
 
 const tee = products.find((p) => p.slug === 'word-mission-tee')!
@@ -29,6 +29,26 @@ describe('priceOrder', () => {
     const order = priceOrder(tampered)
     expect(order.lines[0].unitPriceCents).toBe(medium.priceCents)
     expect(order.totalCents).toBe(medium.priceCents + SHIPPING_CENTS)
+  })
+
+  it('merges repeated lines so the per-line cap cannot be bypassed', () => {
+    const repeated = Array.from({ length: 10 }, () => ({
+      slug: tee.slug,
+      variantId: 'm',
+      quantity: 20,
+    }))
+    const order = priceOrder(repeated)
+    expect(order.lines).toHaveLength(1)
+    expect(order.lines[0].quantity).toBe(20)
+  })
+
+  it('ignores lines beyond MAX_LINES', () => {
+    const many = Array.from({ length: MAX_LINES + 10 }, (_, i) => ({
+      slug: `missing-${i}`,
+      variantId: 'm',
+      quantity: 1,
+    }))
+    expect(priceOrder(many).rejected).toHaveLength(MAX_LINES)
   })
 
   it('rejects an unknown product slug but keeps the rest of the cart', () => {
