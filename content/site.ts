@@ -56,7 +56,6 @@ export const site: SiteConfig = {
   nav: [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
-    { label: 'TV', href: '/tv' },
     { label: 'Gallery', href: '/gallery' },
     { label: 'The Word', href: '/word' },
     { label: 'News', href: '/news' },

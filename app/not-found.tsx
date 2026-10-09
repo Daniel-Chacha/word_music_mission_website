@@ -17,7 +17,7 @@ export default function NotFound() {
           <Button href="/" variant="gold">
             Home
           </Button>
-          <Button href="/tv" variant="ghost">
+          <Button href="/gallery" variant="ghost">
             Watch videos
           </Button>
           <Button href="/word" variant="ghost">

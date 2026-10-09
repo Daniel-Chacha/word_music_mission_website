@@ -29,7 +29,7 @@ export default function HomePage() {
         </h1>
         <p className="mt-5 max-w-2xl text-base text-bone-dim sm:mt-8 sm:text-lg max-sm:[@media(max-height:740px)]:hidden">{site.missionStatement}</p>
         <div className="mt-6 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
-          <Button href="/tv" variant="gold" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
+          <Button href="/gallery" variant="gold" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
             Watch Videos
           </Button>
           {/* <Button href="/support" variant="give" size="lg" className="max-sm:px-4 max-sm:py-2.5 max-sm:text-sm">
@@ -49,7 +49,7 @@ export default function HomePage() {
             title="What God is doing through this team"
             description="Every figure below represents students we have stood in front of, prayed with, and continue to walk alongside."
           />
-          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {ministry.stats.map((stat) => (
               <StatCounter key={stat.label} stat={stat} />
             ))}
@@ -78,7 +78,7 @@ export default function HomePage() {
         <Container>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="Word Mission TV" number="03" title="Watch the mission" />
-            <Button href="/tv" variant="ghost">
+            <Button href="/gallery" variant="ghost">
               All videos
             </Button>
           </div>

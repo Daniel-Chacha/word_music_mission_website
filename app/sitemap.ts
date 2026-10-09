@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
     '',
     '/about',
-    '/tv',
     '/gallery',
     '/word',
     '/word/devotionals',
@@ -24,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   const dynamicPaths = [
-    ...videos.map((v) => `/tv/${v.slug}`),
+    ...videos.map((v) => `/gallery/videos/${v.slug}`),
     ...albums.map((a) => `/gallery/${a.slug}`),
     ...devotionals.map((d) => `/word/devotionals/${d.slug}`),
     ...bibleStudies.map((s) => `/word/bible-studies/${s.slug}`),

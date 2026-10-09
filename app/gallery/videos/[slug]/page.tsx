@@ -15,7 +15,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: PageProps<'/tv/[slug]'>,
+  props: PageProps<'/gallery/videos/[slug]'>,
 ): Promise<Metadata> {
   const { slug } = await props.params
   const video = bySlug(videos, slug)
@@ -23,7 +23,7 @@ export async function generateMetadata(
   return { title: video.title, description: video.description }
 }
 
-export default async function VideoPage(props: PageProps<'/tv/[slug]'>) {
+export default async function VideoPage(props: PageProps<'/gallery/videos/[slug]'>) {
   const { slug } = await props.params
   const video = bySlug(videos, slug)
   if (!video) notFound()
